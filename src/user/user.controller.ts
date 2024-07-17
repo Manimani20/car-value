@@ -2,6 +2,8 @@ import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { CreateUserDto } from './createUser.dto';
 import { UserService } from './user.service';
 import { GetUserDto } from './getUser.dto';
+import { Serialize } from 'src/interceptors/serialize.interceptor';
+import { GetUserResponseDto } from './getUserResponse.dto';
 
 @Controller('auth')
 export class UserController {
@@ -13,6 +15,7 @@ export class UserController {
   }
 
   @Get()
+  @Serialize(GetUserResponseDto)
   getUser(@Query() getUseDto: GetUserDto) {
     let result = this.userService.FindAll(getUseDto);
     return result;
